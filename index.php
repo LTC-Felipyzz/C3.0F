@@ -8,9 +8,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $student_age = htmlspecialchars(trim($_POST['age']));
 
     // --- GITHUB CONFIGURATION ---
-    $github_token = "YOUR_GITHUB_PERSONAL_ACCESS_TOKEN"; // Replace with your GitHub Token
-    $repo_owner   = "YOUR_GITHUB_USERNAME";              // Replace with your GitHub Username
-    $repo_name    = "YOUR_REPOSITORY_NAME";             // Replace with your GitHub Repo Name
+    $github_token = "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"; // Replace with your GitHub Token
+    $repo_owner   = "LTC-Felipyzz";              // Replace with your GitHub Username
+    $repo_name    = "C3.OF";             // Replace with your GitHub Repo Name
 
     // Data payload formatted for GitHub Issues
     $data = array(
