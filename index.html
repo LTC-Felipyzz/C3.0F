@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Love letter</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* Heart Button Styling */
+    .heart-btn {
+      background-color: #ff4b72;
+      color: white;
+      border: none;
+      font-size: 18px;
+      padding: 12px 24px;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .heart-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Container for hidden content */
+    #content {
+      display: none; /* Keeps content hidden at start */
+      margin-top: 20px;
+    }
+
+    /* Fixed CSS properties from original code */
+    .box1 {
+      color: cyan;
+    }
+
+    .box2 {
+      border: 3px solid pink;
+      background: pink;
+      color: yellow;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 5px gray;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Heart Button -->
+  <button class="heart-btn" id="revealBtn" onclick="showContent()">
+    ❤️ Click me
+  </button>
+
+  <!-- Hidden Content -->
+  <div id="content">
+    <div class="box2">
+      Hello po!
+    </div>
+    <p class="box1">
+      crush po kita yieeeeeeee
+    </p>
+  </div>
+
+  <script>
+    function showContent() {
+      // Reveal the content
+      document.getElementById('content').style.display = 'block';
+      // Optionally hide the button after clicking
+      document.getElementById('revealBtn').style.display = 'none';
+    }
+  </script>
+
+</body>
+</html>
