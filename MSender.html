@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Send Message to anyone in website format</title>
+    <title>Send Message</title>
     <style>
         :root {
             --bg-color: #0d0f12;
@@ -22,50 +22,50 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
-        html, body {
+        html {
+            background-color: var(--bg-color);
             height: 100%;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            min-height: 100dvh; /* Adapts dynamically to mobile browser address bars and soft keyboards */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 30px 20px 120px 20px; /* Extra bottom padding prevents keyboard from overlapping inputs */
+            /* Block layout prevents flexbox collapse when FB Lite keyboard opens */
+            display: block; 
+            min-height: 100%;
+            /* 250px bottom padding ensures webview can scroll fields far above any keyboard */
+            padding: 20px 16px 250px 16px; 
+            -webkit-text-size-adjust: 100%;
         }
 
         .container {
             background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 16px;
-            padding: 28px;
+            padding: 24px 20px;
             width: 100%;
             max-width: 480px;
+            margin: 20px auto 0 auto;
             box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
-            margin: auto;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .gt1 {
-            font-size: 2.2rem;
-            line-height: 1.2;
-            margin-bottom: 12px;
-            background: linear-gradient(135deg, red, pink, yellowgreen);
+            font-size: 1.8rem;
+            line-height: 1.3;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #ff4d5a, #f72585, #4cc9f0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .header p {
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             line-height: 1.4;
         }
 
@@ -79,6 +79,8 @@
             font-size: 0.85rem;
             color: var(--text-muted);
             font-weight: 500;
+            display: block;
+            margin-bottom: 6px;
         }
 
         input[type="text"],
@@ -87,13 +89,13 @@
             background: #0d1117;
             border: 1px solid var(--border);
             border-radius: 8px;
-            padding: 12px 14px;
+            padding: 12px;
             color: var(--text-main);
-            font-size: 1rem; /* Stops iOS from forcefully zooming in on focus */
+            /* Must be at least 16px (1rem) to prevent Messenger/Safari auto-zoom */
+            font-size: 16px; 
             outline: none;
             transition: border-color 0.2s ease;
-            scroll-margin-bottom: 140px; /* Ensures space above the keyboard when focused */
-            scroll-margin-top: 20px;
+            -webkit-appearance: none;
         }
 
         input[type="text"]:focus,
@@ -102,8 +104,8 @@
         }
 
         textarea {
-            resize: vertical;
-            min-height: 130px;
+            resize: none;
+            min-height: 110px;
         }
 
         button {
@@ -115,16 +117,14 @@
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s ease, transform 0.1s ease;
+            width: 100%;
+            transition: background 0.2s ease;
             margin-top: 8px;
-        }
-
-        button:hover {
-            background: var(--accent-hover);
+            -webkit-tap-highlight-color: transparent;
         }
 
         button:active {
-            transform: scale(0.98);
+            background: var(--accent-hover);
         }
     </style>
 </head>
@@ -132,26 +132,26 @@
 
     <div class="container">
         <div class="header">
-            <h1 class="gt1">Sent message to anyone via website.</h1>
-            <p>Say whatever is on your mind. Your message is completely private and sent directly to me and I make a code for you to send to them.</p>
+            <h1 class="gt1">Send message to anyone with website link.</h1>
+            <p>Say whatever is on your mind. Your message is completely private and sent directly to me and will make a code and link for your message.</p>
         </div>
 
         <!-- REPLACE YOUR_EMAIL@GMAIL.COM WITH YOUR ACTUAL EMAIL ADDRESS -->
         <form action="https://formsubmit.co/estrellafelipe267@gmail.com" method="POST">
             
-            <!-- FormSubmit Configuration -->
+            <!-- FormSubmit Settings for Webviews -->
             <input type="hidden" name="_subject" value="New Anonymous Confession Received!">
             <input type="hidden" name="_captcha" value="false">
             <input type="hidden" name="_template" value="table">
 
             <div>
-                <label for="nickname">Nickname / Realname (Optional)</label>
-                <input type="text" id="nickname" name="Nickname" placeholder="e.g., crush friend family or Anonymous">
+                <label for="nickname">Your Social media account where I can send you the link</label>
+                <input type="text" id="nickname" name="Nickname" placeholder="FB,Lite,IG etc...">
             </div>
 
             <div>
-                <label for="confession">Your Message</label>
-                <textarea id="confession" name="Confession" placeholder="Write your confession here..." required></textarea>
+                <label for="confession">Write your message here include to whom</label>
+                <textarea id="confession" name="Confession" placeholder="Dear crush for example HAHA" required></textarea>
             </div>
 
             <button type="submit">Send Message</button>
@@ -159,14 +159,21 @@
     </div>
 
     <script>
-        // Smoothly auto-scroll input into view when mobile keyboard pops up
-        const formInputs = document.querySelectorAll('input[type="text"], textarea');
-        
-        formInputs.forEach(input => {
-            input.addEventListener('focus', () => {
+        // Webview keyboard fix for Messenger and FB Lite
+        const formFields = document.querySelectorAll('input[type="text"], textarea');
+
+        formFields.forEach(field => {
+            field.addEventListener('focus', function () {
+                // Delayed execution handles FB Lite's slow keyboard animation
                 setTimeout(() => {
-                    input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 300); // 300ms delay matches mobile keyboard opening animation
+                    // Scroll active field to the top third of the webview window
+                    const fieldRect = field.getBoundingClientRect();
+                    const absoluteTop = fieldRect.top + window.pageYOffset;
+                    window.scrollTo({
+                        top: absoluteTop - 40,
+                        behavior: 'smooth'
+                    });
+                }, 350);
             });
         });
     </script>
