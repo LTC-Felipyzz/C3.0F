@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Send Me a Confession</title>
     <style>
         :root {
@@ -22,24 +22,31 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
+        html, body {
+            height: 100%;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            min-height: 100vh;
+            min-height: 100dvh; /* Adapts dynamically to mobile browser address bars and soft keyboards */
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 30px 20px 120px 20px; /* Extra bottom padding prevents keyboard from overlapping inputs */
         }
 
         .container {
             background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 16px;
-            padding: 32px;
+            padding: 28px;
             width: 100%;
             max-width: 480px;
             box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+            margin: auto;
         }
 
         .header {
@@ -47,11 +54,13 @@
             margin-bottom: 24px;
         }
 
-        .header h1 {
-            font-size: 1.6rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--text-main);
+        .gt1 {
+            font-size: 2.2rem;
+            line-height: 1.2;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, red, pink, yellowgreen);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .header p {
@@ -80,9 +89,11 @@
             border-radius: 8px;
             padding: 12px 14px;
             color: var(--text-main);
-            font-size: 0.95rem;
+            font-size: 1rem; /* Stops iOS from forcefully zooming in on focus */
             outline: none;
             transition: border-color 0.2s ease;
+            scroll-margin-bottom: 140px; /* Ensures space above the keyboard when focused */
+            scroll-margin-top: 20px;
         }
 
         input[type="text"]:focus,
@@ -99,7 +110,7 @@
             background: var(--accent);
             color: #ffffff;
             border: none;
-            padding: 12px;
+            padding: 14px;
             border-radius: 8px;
             font-size: 1rem;
             font-weight: 600;
@@ -115,21 +126,13 @@
         button:active {
             transform: scale(0.98);
         }
-
-        .gt1 {
-        font-size: 2.5rem;
-        background: linear-gradient(red, pink, yellowgreen);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-        
     </style>
 </head>
 <body>
 
     <div class="container">
         <div class="header">
-          <h1 class="gt1">Sent message to anyone via website.</h1>
+            <h1 class="gt1">Sent message to anyone via website.</h1>
             <p>Say whatever is on your mind. Your message is completely private and sent directly to me and I make a code for you to send to them.</p>
         </div>
 
@@ -155,6 +158,17 @@
         </form>
     </div>
 
+    <script>
+        // Smoothly auto-scroll input into view when mobile keyboard pops up
+        const formInputs = document.querySelectorAll('input[type="text"], textarea');
+        
+        formInputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                setTimeout(() => {
+                    input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300); // 300ms delay matches mobile keyboard opening animation
+            });
+        });
+    </script>
 </body>
-  </html>
-  
+</html>
