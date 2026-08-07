@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Me a Confession</title>
+    <style>
+        :root {
+            --bg-color: #0d0f12;
+            --card-bg: #161b22;
+            --accent: #e63946;
+            --accent-hover: #ff4d5a;
+            --text-main: #f0f6fc;
+            --text-muted: #8b949e;
+            --border: #30363d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            background: #0d1117;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 14px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            border-color: var(--accent);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 130px;
+        }
+
+        button {
+            background: var(--accent);
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.1s ease;
+            margin-top: 8px;
+        }
+
+        button:hover {
+            background: var(--accent-hover);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .gt1 {
+        font-size: 2.5rem;
+        background: linear-gradient(red, pink, yellowgreen);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+        
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+          <h1 class="gt1">Sent message to anyone via website.</h1>
+            <p>Say whatever is on your mind. Your message is completely private and sent directly to me and I make a code for you to send to them.</p>
+        </div>
+
+        <!-- REPLACE YOUR_EMAIL@GMAIL.COM WITH YOUR ACTUAL EMAIL ADDRESS -->
+        <form action="https://formsubmit.co/estrellafelipe267@gmail.com" method="POST">
+            
+            <!-- FormSubmit Configuration -->
+            <input type="hidden" name="_subject" value="New Anonymous Confession Received!">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+
+            <div>
+                <label for="nickname">Nickname / Realname (Optional)</label>
+                <input type="text" id="nickname" name="Nickname" placeholder="e.g., crush friend family or Anonymous">
+            </div>
+
+            <div>
+                <label for="confession">Your Message</label>
+                <textarea id="confession" name="Confession" placeholder="Write your confession here..." required></textarea>
+            </div>
+
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+
+</body>
+  </html>
+  
