@@ -63,14 +63,14 @@
 
     .line {
       font-size: 1.1rem;
-      background: linear-gradient(135deg, #FF004D, #6A00FF);
+      background: #232529;
       padding: 12px 0;
       transition: all 0.3s ease;
       cursor: pointer;
     }
 
     .line.active {
-      background: #232529;
+      background: linear-gradient(135deg, #FF004D, #6A00FF);
       font-size: 1.3rem;
       font-weight: bold;
     }
@@ -155,50 +155,46 @@
   <script>
     // 1. Synced lyrics data array (Timestamp in seconds + text)
     const lyricsData = [
-        { time: 13.5, text: "Hmm oh (oh)" },
-  { time: 8.0, text: "Hmm pag-usapan muna natin ang iyong gabi" },
-  { time: 25.5, text: "Ikaw ang pahinga ko mahal" },
-  { time: 30.5, text: "Lumiliwanag aking ngiti" },
-  { time: 34.5, text: "Kapag kausap na" },
-  { time: 37.0, text: "Kita pasensya lang kung" },
-  { time: 41.0, text: "Babalik pa rin sa atin" },
-  { time: 46.0, text: "Kahit 'di mo 'ko hanapin" },
-  { time: 51.0, text: "Magpapaalipin lang sa 'yo" },
-  { time: 56.5, text: "Pinapawi mo ang uhaw ng aking puso" },
-  { time: 103.0, text: "Oh sabik sa lalim" },
-  { time: 108.5, text: "Ng pagtingin mo para sa 'kin" },
-  { time: 114.0, text: "'Pag napansin mo na ako" },
-  { time: 119.0, text: "Ipapaunawa ko agad sa 'yo na" },
-  { time: 125.0, text: "Isa lang isa lang (isa lang)" },
-  { time: 130.0, text: "Ang hinahanap ko hanap ko (hanap)" },
-  { time: 135.5, text: "Ikaw ra man ikaw ra man" },
-  { time: 141.0, text: "Kung papalarin na mapapasa'kin ba" },
-  { time: 147.0, text: "Kung saan-saan man magtungo 'di alam kung ba't sa puso" },
-  { time: 153.0, text: "Pangalan mo lang ang tanging laman" },
-  { time: 158.0, text: "Hindi alam kung ba't mas sinusunod mo pa ang iyong mga tala" },
-  { time: 164.0, text: "At 'di ang nararamdaman sa akin ngunit" },
-  { time: 169.5, text: "Babalik pa rin sa atin" },
-  { time: 174.5, text: "Kahit 'di mo 'ko hanapin" },
-  { time: 179.5, text: "Magpapa-alipin lang sa 'yo" },
-  { time: 185.0, text: "Pinapawi mo ang uhaw ng aking puso" },
-  { time: 192.5, text: "Oh sabik sa lalim" },
-  { time: 197.5, text: "Ng pagtingin mo para sa 'kin" },
-  { time: 203.0, text: "'Pag napansin mo na ako" },
-  { time: 207.5, text: "Ipapaunawa ko agad sa 'yo na" },
-  { time: 213.0, text: "Isa lang isa lang (isa lang)" },
-  { time: 218.5, text: "Ang hinahanap ko hanap ko" },
-  { time: 224.0, text: "Ikaw ra man ikaw ra man" },
-  { time: 229.0, text: "Kung papalarin na mapapasa'kin ba" },
-  { time: 236.0, text: "Kung mang-aakit akit ka na naman" },
-  { time: 241.0, text: "Pwede bang sa akin akin lang" },
-  { time: 246.5, text: "Kung mang-aakit akit ka na naman" },
-  { time: 251.5, text: "Pwede bang sa akin akin lang" },
-  { time: 257.0, text: "Kung mang-aakit akit ka na naman" },
-  { time: 262.0, text: "Pwede bang sa akin akin lang" },
-  { time: 268.0, text: "Isa lang isa lang" },
-  { time: 273.0, text: "Ang hinahanap ko hanap ko" },
-  { time: 278.5, text: "Ikaw ra man ikaw ra man" },
-  { time: 283.5, text: "Kung papalarin na mapapasa'kin ba" }
+          { time: 24.07, text: "Pag-usapan muna natin ang iyong gabi" },
+  { time: 29.44, text: "Ikaw ang pahinga ko, mahal" },
+  { time: 36.41, text: "Lumiliwanag aking ngiti kapag kausap na" },
+  { time: 42.80, text: "Kita pasensya lang kung" },
+  { time: 46.01, text: "Babalik pa rin sa atin" },
+  { time: 48.96, text: "Kahit 'di mo 'ko hanapin" },
+  { time: 51.49, text: "Magpapaalipin lang sa'yo" },
+  { time: 54.43, text: "Pinapawi mo ang uhaw ng aking puso" },
+  { time: 58.46, text: "Oh, sabik sa lalim ng pagtingin mo para sa'kin" },
+  { time: 63.39, text: "'Pag napansin mo na ako" },
+  { time: 66.38, text: "Papaunawa ko agad sa'yo na" },
+  { time: 69.40, text: "Isa lang, isa lang" },
+  { time: 74.98, text: "Ang hinahanap ko, hanap ko" },
+  { time: 81.12, text: "Ikaw ra man, ikaw ra man" },
+  { time: 86.98, text: "Kung papalarin na, mapapasakin ba?" },
+  { time: 93.31, text: "Kung saan-saan man magtungo 'di alam kung ba't sa puso" },
+  { time: 99.10, text: "Pangalan mo lang ang tanging laman" },
+  { time: 105.04, text: "Hindi alam kung ba't mas sinusunod mo pa ang iyong mga tala" },
+  { time: 112.71, text: "At 'di ang nararamdaman sa akin ngunit" },
+  { time: 120.42, text: "Babalik pa rin sa atin" },
+  { time: 123.39, text: "Kahit 'di mo 'ko hanapin" },
+  { time: 125.91, text: "Magpapaalipin lang sa'yo" },
+  { time: 128.90, text: "Pinapawi mo ang uhaw ng aking puso" },
+  { time: 132.86, text: "Oh, sabik sa lalim ng pagtingin mo para sa'kin" },
+  { time: 138.12, text: "'Pag napansin mo na ako" },
+  { time: 140.48, text: "Ipapaunawa ko agad sa'yo na" },
+  { time: 143.81, text: "Isa lang, isa lang" },
+  { time: 149.43, text: "Ang hinahanap ko, hanap ko" },
+  { time: 155.44, text: "Ikaw ra man, ikaw ra man" },
+  { time: 161.23, text: "Kung papalarin na, mapapasakin ba?" },
+  { time: 199.70, text: "Kung mang-aakit, akit ka na naman" },
+  { time: 208.71, text: "Pwede bang sa akin, akin lang?" },
+  { time: 214.09, text: "Kung mang-aakit, akit ka na naman" },
+  { time: 220.60, text: "Pwede bang sa akin, akin lang?" },
+  { time: 226.48, text: "Kung mang-aakit, akit ka na naman" },
+  { time: 229.57, text: "Pwede bang sa akin, akin lang?" },
+  { time: 235.98, text: "Isa lang, isa lang" },
+  { time: 241.66, text: "Ang hinahanap ko, hanap ko" },
+  { time: 247.64, text: "Ikaw ra man, ikaw ra man" },
+  { time: 253.56, text: "Kung papalarin na, mapapasakin ba?" }
       
       // You can add the remaining timestamps and lyric lines here
     ];
