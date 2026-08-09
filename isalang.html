@@ -30,8 +30,39 @@
       max-width: 450px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
       text-align: center;
+      border: 2px solid transparent;
+‎      background-image: 
+‎      linear-gradient(#1e1e1e, #1e1e1e), 
+‎      linear-gradient(135deg, #00d2ff, #ff005c, #ff7700, #00d2ff);
+‎      background-origin: border-box;
+‎      background-clip: padding-box, border-box;
+‎      background-size: 100% 100%, 300% 300%;
+      ‎animation: lightning-glow 3s linear infinite;
+      
     }
-
+      ‎@keyframes lightning-glow {
+   ‎   0% {
+‎      background-position: 0% 0%, 0% 50%;
+‎      box-shadow: 
+‎      0 0 10px #00d2ff,
+‎      0 0 25px rgba(255, 0, 92, 0.6),
+‎      0 0 40px rgba(255, 119, 0, 0.4);
+‎  }
+      50% {
+‎      background-position: 0% 0%, 100% 50%;
+‎      box-shadow: 
+‎      0 0 15px #ff005c,
+‎      0 0 30px rgba(255, 119, 0, 0.7),
+‎      0 0 45px rgba(0, 210, 255, 0.5);
+‎  }
+      100% {
+‎      background-position: 0% 0%, 0% 50%;
+‎      box-shadow: 
+‎      0 0 10px #00d2ff,
+‎      0 0 25px rgba(255, 0, 92, 0.6),
+‎      0 0 40px rgba(255, 119, 0, 0.4);
+‎  }
+‎}
     .track-title {
       font-size: 1.5rem;
       font-weight: 700;
@@ -128,32 +159,138 @@
       background: linear-gradient(90deg, #FF0000, #0000FF);
       cursor: pointer;
     }
+  /* Card Container Bounds */
+.player-card {
+  box-sizing: border-box;
+  overflow: hidden; /* Prevents speakers/beat animation from going outside */
+  position: relative;
+}
+
+/* Speaker & Title Row Alignment */
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 8px;
+  box-sizing: border-box;
+}
+
+.title-group {
+  text-align: center;
+  flex: 1;
+}
+
+/* Speaker Icons */
+.speaker-icon {
+  width: 26px;
+  height: 26px;
+  color: #ff005c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+/* Bass Pulse Animation on Speakers when Playing */
+.playing .speaker-icon {
+  animation: bass-pump 0.45s infinite alternate ease-in-out;
+}
+
+@keyframes bass-pump {
+  0% { transform: scale(1); color: #ff005c; }
+  100% { transform: scale(1.25); color: #7000ff; }
+}
+
+/* Tiny Lyrics Beat Line Visualizer */
+.beat-line {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 4px;
+  height: 14px;
+  margin: 8px 0 12px 0;
+}
+
+.beat-line .bar {
+  width: 3px;
+  height: 3px;
+  background: linear-gradient(180deg, #ff005c, #7000ff);
+  border-radius: 2px;
+  transition: height 0.2s ease;
+}
+
+/* Audio Beat Bounce Animation when Playing */
+.playing .beat-line .bar {
+  animation: beat-bounce 0.5s infinite ease-in-out alternate;
+}
+
+.playing .beat-line .bar:nth-child(1) { animation-delay: 0.1s; }
+.playing .beat-line .bar:nth-child(2) { animation-delay: 0.3s; }
+.playing .beat-line .bar:nth-child(3) { animation-delay: 0.2s; }
+.playing .beat-line .bar:nth-child(4) { animation-delay: 0.4s; }
+.playing .beat-line .bar:nth-child(5) { animation-delay: 0.15s; }
+
+@keyframes beat-bounce {
+  0% { height: 3px; }
+  100% { height: 14px; }
+}
+
   </style>
 </head>
 <body>
 
-  <div class="player-card">
-    <h2 class="track-title">Isa Lang</h2>
-    <p class="track-artist">Arthur Felip</p>
-
-    <!-- Synced Lyrics Window -->
-    <div class="lyrics-container" id="lyricsContainer"></div>
-
-    <!-- Controls -->
-    <div class="controls">
-      <div class="progress-container">
-        <span id="currentTime">0:00</span>
-        <input type="range" id="progressBar" class="progress-bar" value="0" min="0" max="100">
-        <span id="duration">0:00</span>
-      </div>
-
-      <button class="play-btn" id="playBtn">Play</button>
+ <div class="player-card" id="playerCard">
+  <!-- Header with Speaker Icons on Left & Right -->
+  <div class="header-container">
+    <div class="speaker-icon">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 3v18.05c-1.16-.4-2.5-.2-3.71.53-2.06 1.25-2.73 3.88-1.48 5.94 1.25 2.06 3.88 2.73 5.94 1.48 1.83-1.11 2.65-3.23 2.25-5.25H15V8h6V3h-9z"/>
+        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+      </svg>
     </div>
 
-    <!-- Audio Element -->
-    <audio id="audio" src="Arthur-Felip isa lang.mp3"></audio>
+    <div class="title-group">
+      <h2 class="track-title">Isa Lang</h2>
+      <p class="track-artist">Arthur Felip</p>
+    </div>
+
+    <div class="speaker-icon">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 3v18.05c-1.16-.4-2.5-.2-3.71.53-2.06 1.25-2.73 3.88-1.48 5.94 1.25 2.06 3.88 2.73 5.94 1.48 1.83-1.11 2.65-3.23 2.25-5.25H15V8h6V3h-9z"/>
+        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+      </svg>
+    </div>
   </div>
 
+  <!-- Tiny Lyrics Beat Visualizer Line -->
+  <div class="beat-line">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </div>
+
+  <!-- Synced Lyrics Window -->
+  <div class="lyrics-container" id="lyricsContainer"></div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <div class="progress-container">
+      <span id="currentTime">0:00</span>
+      <input type="range" id="progressBar" class="progress-bar" value="0" min="0" max="100">
+      <span id="duration">0:00</span>
+    </div>
+
+    <button class="play-btn" id="playBtn">Play</button>
+  </div>
+
+  <!-- Audio Element -->
+  <audio id="audio" src="Arthur-Felip isa lang.mp3"></audio>
+</div>
+
+  
   <script>
     // 1. Synced lyrics data array (Timestamp in seconds + text)
     const lyricsData = [
@@ -292,6 +429,27 @@
       const secs = Math.floor(seconds % 60);
       return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
     }
+  const playerCard = document.getElementById('playerCard');
+
+// Update your Play button event listener to toggle animations
+playBtn.addEventListener('click', () => {
+  if (audio.paused) {
+    audio.play();
+    playBtn.innerText = 'Pause';
+    playerCard.classList.add('playing'); // Starts speakers & beat animation
+  } else {
+    audio.pause();
+    playBtn.innerText = 'Play';
+    playerCard.classList.remove('playing'); // Stops animation
+  }
+});
+
+// Automatically stop animation when song finishes
+audio.addEventListener('ended', () => {
+  playBtn.innerText = 'Play';
+  playerCard.classList.remove('playing');
+});
+
 
     // Initialize
     renderLyrics();
