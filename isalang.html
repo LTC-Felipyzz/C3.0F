@@ -81,30 +81,30 @@
       flex: 1;
     }
 
-    /* NCS Style Realistic Bass Speaker */
+    /* Speaker Styling */
     .speaker-icon {
       width: 48px;
       height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.04s cubic-bezier(0.1, 0.9, 0.2, 1);
+      transition: transform 0.08s ease-out, filter 0.08s ease-out;
       transform-origin: center;
-      filter: drop-shadow(0 0 8px rgba(255, 0, 92, 0.5));
+      filter: drop-shadow(0 0 6px rgba(255, 0, 92, 0.3));
       will-change: transform;
     }
 
-    /* Heavy Vibration Keyframes for Drum/Bass Drops */
+    /* Tamed Subtle Vibration for Huge Heavy Beats Only */
     @keyframes bass-shake {
       0% { transform: scale(var(--spk-scale, 1)) translate(0, 0); }
-      25% { transform: scale(var(--spk-scale, 1)) translate(-1.5px, 1.5px); }
-      50% { transform: scale(var(--spk-scale, 1)) translate(1.5px, -1.5px); }
-      75% { transform: scale(var(--spk-scale, 1)) translate(-1.5px, -1.5px); }
+      25% { transform: scale(var(--spk-scale, 1)) translate(-0.8px, 0.8px); }
+      50% { transform: scale(var(--spk-scale, 1)) translate(0.8px, -0.8px); }
+      75% { transform: scale(var(--spk-scale, 1)) translate(-0.8px, -0.8px); }
       100% { transform: scale(var(--spk-scale, 1)) translate(0, 0); }
     }
 
     .speaker-icon.vibrate {
-      animation: bass-shake 0.05s infinite;
+      animation: bass-shake 0.07s ease-in-out infinite;
     }
 
     .speaker-svg {
@@ -231,7 +231,7 @@
 
 <div class="player-card" id="playerCard">
   <div class="header-container">
-    <!-- Left Circular Subwoofer -->
+    <!-- Left Subwoofer -->
     <div class="speaker-icon">
       <svg class="speaker-svg" viewBox="0 0 100 100">
         <defs>
@@ -243,7 +243,7 @@
         <circle cx="50" cy="50" r="46" fill="#18191c" stroke="url(#spkGrad)" stroke-width="4"/>
         <circle cx="50" cy="50" r="38" fill="#111215" stroke="#333333" stroke-width="3"/>
         <circle cx="50" cy="50" r="26" fill="#202226" stroke="#151619" stroke-width="2"/>
-        <circle class="speaker-cone" cx="50" cy="50" r="12" fill="url(#spkGrad)"/>
+        <circle cx="50" cy="50" r="12" fill="url(#spkGrad)"/>
       </svg>
     </div>
 
@@ -252,13 +252,13 @@
       <p class="track-artist">Arthur Felip</p>
     </div>
 
-    <!-- Right Circular Subwoofer -->
+    <!-- Right Subwoofer -->
     <div class="speaker-icon">
       <svg class="speaker-svg" viewBox="0 0 100 100">
         <circle cx="50" cy="50" r="46" fill="#18191c" stroke="url(#spkGrad)" stroke-width="4"/>
         <circle cx="50" cy="50" r="38" fill="#111215" stroke="#333333" stroke-width="3"/>
         <circle cx="50" cy="50" r="26" fill="#202226" stroke="#151619" stroke-width="2"/>
-        <circle class="speaker-cone" cx="50" cy="50" r="12" fill="url(#spkGrad)"/>
+        <circle cx="50" cy="50" r="12" fill="url(#spkGrad)"/>
       </svg>
     </div>
   </div>
@@ -364,7 +364,7 @@
     try {
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       analyser = audioCtx.createAnalyser();
-      analyser.fftSize = 128; // Increased resolution for sharp sub-bass detection
+      analyser.fftSize = 256;
       source = audioCtx.createMediaElementSource(audio);
       source.connect(analyser);
       analyser.connect(audioCtx.destination);
@@ -374,37 +374,48 @@
     }
   }
 
-  // Real-Time NCS Style Bass Shake & Visualizer
   function updateVisualizers() {
     if (!audio.paused && analyser) {
       const dataArray = new Uint8Array(analyser.frequencyBinCount);
       analyser.getByteFrequencyData(dataArray);
 
-      // 1. Isolate Deep Sub-Bass (Bins 0 to 2 for Kick Drums/Bamm sounds)
-      let bassVal = (dataArray[0] + dataArray[1] + dataArray[2]) / 3;
-      
-      // Calculate expansion scale up to 1.55x size on heavy hits
-      let scale = 1 + Math.pow(bassVal / 255, 2) * 0.55;
+      // Sub-Bass & Kick Drum (Bins 0 and 1)
+      let subBass = (dataArray[0] + dataArray[1]) / 2;
 
-      speakers.forEach(spk => {
-        spk.style.setProperty('--spk-scale', scale);
-        spk.style.transform = `scale(${scale})`;
+      // Base Threshold: Keeps speakers relaxed during quiet/piano parts (< 165)
+      const bassGateThreshold = 165;
 
-        // Trigger violent vibration effect when bass exceeds heavy threshold
-        if (bassVal > 180) {
-          spk.classList.add('vibrate');
-          spk.style.filter = `drop-shadow(0 0 16px rgba(255, 0, 92, 0.95))`;
-        } else {
+      if (subBass > bassGateThreshold) {
+        let intensity = (subBass - bassGateThreshold) / (255 - bassGateThreshold);
+        let scale = 1 + Math.pow(intensity, 2) * 0.32; // Smooth, non-aggressive pop
+
+        speakers.forEach(spk => {
+          spk.style.setProperty('--spk-scale', scale);
+          spk.style.transform = `scale(${scale})`;
+
+          // Vibrates ONLY during extremely heavy/huge bass drops (> 230)
+          if (subBass > 230) {
+            spk.classList.add('vibrate');
+            spk.style.filter = `drop-shadow(0 0 12px rgba(255, 0, 92, 0.85))`;
+          } else {
+            spk.classList.remove('vibrate');
+            spk.style.filter = `drop-shadow(0 0 7px rgba(255, 0, 92, 0.45))`;
+          }
+        });
+      } else {
+        // Speaker sits relaxed when there is no heavy beat
+        speakers.forEach(spk => {
+          spk.style.transform = 'scale(1)';
           spk.classList.remove('vibrate');
-          spk.style.filter = `drop-shadow(0 0 8px rgba(255, 0, 92, 0.5))`;
-        }
-      });
+          spk.style.filter = `drop-shadow(0 0 6px rgba(255, 0, 92, 0.3))`;
+        });
+      }
 
-      // 2. Animated Lyrics Beat Bar Line (Vocal & Mid-Frequency Sync)
-      const barIndices = [1, 4, 8, 14, 22];
+      // Middle visualizer bars
+      const barIndices = [2, 6, 12, 22, 35];
       bars.forEach((bar, index) => {
         let freqValue = dataArray[barIndices[index]] || 0;
-        let barHeight = Math.max(3, (freqValue / 255) * 20);
+        let barHeight = Math.max(3, (freqValue / 255) * 18);
         bar.style.height = `${barHeight}px`;
       });
 
