@@ -72,7 +72,7 @@
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      padding: 0 8px;
+      padding: 0 4px;
       box-sizing: border-box;
     }
 
@@ -81,67 +81,50 @@
       flex: 1;
     }
 
+    /* Circular Realistic Speaker Styling */
     .speaker-icon {
-      width: 26px;
-      height: 26px;
-      color: #ff005c;
+      width: 42px;
+      height: 42px;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.2s ease;
+      transition: transform 0.05s ease-out;
+      transform-origin: center;
+      filter: drop-shadow(0 0 6px rgba(255, 0, 92, 0.4));
     }
 
-    .playing .speaker-icon {
-      animation: bass-pump 0.45s infinite alternate ease-in-out;
+    .speaker-svg {
+      width: 100%;
+      height: 100%;
     }
 
-    @keyframes bass-pump {
-      0% { transform: scale(1); color: #ff005c; }
-      100% { transform: scale(1.25); color: #7000ff; }
-    }
-
+    /* Beat Visualizer Bars */
     .beat-line {
       display: flex;
       justify-content: center;
       align-items: flex-end;
-      gap: 4px;
-      height: 14px;
-      margin: 8px 0 12px 0;
+      gap: 5px;
+      height: 18px;
+      margin: 10px 0 12px 0;
     }
 
     .beat-line .bar {
-      width: 3px;
+      width: 4px;
       height: 3px;
       background: linear-gradient(180deg, #ff005c, #7000ff);
       border-radius: 2px;
-      transition: height 0.2s ease;
-    }
-
-    .playing .beat-line .bar {
-      animation: beat-bounce 0.5s infinite ease-in-out alternate;
-    }
-
-    .playing .beat-line .bar:nth-child(1) { animation-delay: 0.1s; }
-    .playing .beat-line .bar:nth-child(2) { animation-delay: 0.3s; }
-    .playing .beat-line .bar:nth-child(3) { animation-delay: 0.2s; }
-    .playing .beat-line .bar:nth-child(4) { animation-delay: 0.4s; }
-    .playing .beat-line .bar:nth-child(5) { animation-delay: 0.15s; }
-
-    @keyframes beat-bounce {
-      0% { height: 3px; }
-      100% { height: 14px; }
+      transition: height 0.05s ease-out;
     }
 
     .track-title {
       font-size: 1.5rem;
       font-weight: 700;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
 
     .track-artist {
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: #a7a7a7;
-      margin-bottom: 24px;
     }
 
     .lyrics-container {
@@ -194,7 +177,7 @@
       font-size: 1rem;
       font-weight: bold;
       cursor: pointer;
-      transition: transform 0.2s, background-color 0.2s;
+      transition: transform 0.2s;
     }
 
     .play-btn:hover {
@@ -234,10 +217,19 @@
 
 <div class="player-card" id="playerCard">
   <div class="header-container">
+    <!-- Left Circular Subwoofer -->
     <div class="speaker-icon">
-      <svg viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 3v18.05c-1.16-.4-2.5-.2-3.71.53-2.06 1.25-2.73 3.88-1.48 5.94 1.25 2.06 3.88 2.73 5.94 1.48 1.83-1.11 2.65-3.23 2.25-5.25H15V8h6V3h-9z"/>
-        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+      <svg class="speaker-svg" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="spkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FF005C" />
+            <stop offset="100%" stop-color="#7000FF" />
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="50" r="46" fill="#18191c" stroke="url(#spkGrad)" stroke-width="4"/>
+        <circle cx="50" cy="50" r="38" fill="#111215" stroke="#333333" stroke-width="3"/>
+        <circle cx="50" cy="50" r="26" fill="#202226" stroke="#151619" stroke-width="2"/>
+        <circle cx="50" cy="50" r="11" fill="url(#spkGrad)"/>
       </svg>
     </div>
 
@@ -246,10 +238,13 @@
       <p class="track-artist">Arthur Felip</p>
     </div>
 
+    <!-- Right Circular Subwoofer -->
     <div class="speaker-icon">
-      <svg viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 3v18.05c-1.16-.4-2.5-.2-3.71.53-2.06 1.25-2.73 3.88-1.48 5.94 1.25 2.06 3.88 2.73 5.94 1.48 1.83-1.11 2.65-3.23 2.25-5.25H15V8h6V3h-9z"/>
-        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+      <svg class="speaker-svg" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="46" fill="#18191c" stroke="url(#spkGrad)" stroke-width="4"/>
+        <circle cx="50" cy="50" r="38" fill="#111215" stroke="#333333" stroke-width="3"/>
+        <circle cx="50" cy="50" r="26" fill="#202226" stroke="#151619" stroke-width="2"/>
+        <circle cx="50" cy="50" r="11" fill="url(#spkGrad)"/>
       </svg>
     </div>
   </div>
@@ -274,7 +269,7 @@
     <button class="play-btn" id="playBtn">Play</button>
   </div>
 
-  <audio id="audio" src="Arthur-Felip isa lang.mp3"></audio>
+  <audio id="audio" src="Arthur-Felip isa lang.mp3" crossorigin="anonymous"></audio>
 </div>
 
 <script>
@@ -327,10 +322,14 @@
   const progressBar = document.getElementById('progressBar');
   const currentTimeEl = document.getElementById('currentTime');
   const durationEl = document.getElementById('duration');
-  const playerCard = document.getElementById('playerCard');
+  const speakers = document.querySelectorAll('.speaker-icon');
+  const bars = document.querySelectorAll('.beat-line .bar');
 
   let currentActiveIndex = -1;
+  let audioCtx, analyser, source;
+  let isAudioSetup = false;
 
+  // Render Lyrics
   function renderLyrics() {
     lyricsContainer.innerHTML = '';
     lyricsData.forEach((item, index) => {
@@ -345,18 +344,69 @@
     });
   }
 
+  // Setup Real Audio Spectrum Analyzer
+  function initAudioAnalyzer() {
+    if (isAudioSetup) return;
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 64;
+      source = audioCtx.createMediaElementSource(audio);
+      source.connect(analyser);
+      analyser.connect(audioCtx.destination);
+      isAudioSetup = true;
+    } catch (e) {
+      console.log("AudioContext setup error:", e);
+    }
+  }
+
+  // Real-time Audio Frequency Visualizer Loop
+  function updateVisualizers() {
+    if (!audio.paused && analyser) {
+      const dataArray = new Uint8Array(analyser.frequencyBinCount);
+      analyser.getByteFrequencyData(dataArray);
+
+      // 1. Calculate Bass for Speaker Pump (Bins 0 to 3)
+      let bassSum = dataArray[0] + dataArray[1] + dataArray[2] + dataArray[3];
+      let bassAvg = bassSum / 4;
+      let speakerScale = 1 + (bassAvg / 255) * 0.32; // Scale based on actual bass hits
+      
+      speakers.forEach(spk => {
+        spk.style.transform = `scale(${speakerScale})`;
+      });
+
+      // 2. Map Vocal/Music Frequencies to Beat Line Bars
+      const barIndices = [2, 5, 8, 12, 16]; // Frequency bins spanning bass to treble
+      bars.forEach((bar, index) => {
+        let freqValue = dataArray[barIndices[index]] || 0;
+        let barHeight = Math.max(3, (freqValue / 255) * 18);
+        bar.style.height = `${barHeight}px`;
+      });
+
+      requestAnimationFrame(updateVisualizers);
+    } else {
+      // Reset animations on pause
+      speakers.forEach(spk => spk.style.transform = 'scale(1)');
+      bars.forEach(bar => bar.style.height = '3px');
+    }
+  }
+
   playBtn.addEventListener('click', () => {
+    initAudioAnalyzer();
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+
     if (audio.paused) {
       audio.play().then(() => {
         playBtn.innerText = 'Pause';
-        playerCard.classList.add('playing');
+        updateVisualizers();
       }).catch(err => {
-        console.log("Playback blocked or file error:", err);
+        console.log("Playback error:", err);
       });
     } else {
       audio.pause();
       playBtn.innerText = 'Play';
-      playerCard.classList.remove('playing');
     }
   });
 
@@ -400,7 +450,6 @@
 
   audio.addEventListener('ended', () => {
     playBtn.innerText = 'Play';
-    playerCard.classList.remove('playing');
   });
 
   progressBar.addEventListener('input', () => {
