@@ -81,16 +81,30 @@
       flex: 1;
     }
 
-    /* Circular Realistic Speaker Styling */
+    /* NCS Style Realistic Bass Speaker */
     .speaker-icon {
-      width: 42px;
-      height: 42px;
+      width: 48px;
+      height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.05s ease-out;
+      transition: transform 0.04s cubic-bezier(0.1, 0.9, 0.2, 1);
       transform-origin: center;
-      filter: drop-shadow(0 0 6px rgba(255, 0, 92, 0.4));
+      filter: drop-shadow(0 0 8px rgba(255, 0, 92, 0.5));
+      will-change: transform;
+    }
+
+    /* Heavy Vibration Keyframes for Drum/Bass Drops */
+    @keyframes bass-shake {
+      0% { transform: scale(var(--spk-scale, 1)) translate(0, 0); }
+      25% { transform: scale(var(--spk-scale, 1)) translate(-1.5px, 1.5px); }
+      50% { transform: scale(var(--spk-scale, 1)) translate(1.5px, -1.5px); }
+      75% { transform: scale(var(--spk-scale, 1)) translate(-1.5px, -1.5px); }
+      100% { transform: scale(var(--spk-scale, 1)) translate(0, 0); }
+    }
+
+    .speaker-icon.vibrate {
+      animation: bass-shake 0.05s infinite;
     }
 
     .speaker-svg {
@@ -113,7 +127,7 @@
       height: 3px;
       background: linear-gradient(180deg, #ff005c, #7000ff);
       border-radius: 2px;
-      transition: height 0.05s ease-out;
+      transition: height 0.04s ease-out;
     }
 
     .track-title {
@@ -229,7 +243,7 @@
         <circle cx="50" cy="50" r="46" fill="#18191c" stroke="url(#spkGrad)" stroke-width="4"/>
         <circle cx="50" cy="50" r="38" fill="#111215" stroke="#333333" stroke-width="3"/>
         <circle cx="50" cy="50" r="26" fill="#202226" stroke="#151619" stroke-width="2"/>
-        <circle cx="50" cy="50" r="11" fill="url(#spkGrad)"/>
+        <circle class="speaker-cone" cx="50" cy="50" r="12" fill="url(#spkGrad)"/>
       </svg>
     </div>
 
@@ -244,7 +258,7 @@
         <circle cx="50" cy="50" r="46" fill="#18191c" stroke="url(#spkGrad)" stroke-width="4"/>
         <circle cx="50" cy="50" r="38" fill="#111215" stroke="#333333" stroke-width="3"/>
         <circle cx="50" cy="50" r="26" fill="#202226" stroke="#151619" stroke-width="2"/>
-        <circle cx="50" cy="50" r="11" fill="url(#spkGrad)"/>
+        <circle class="speaker-cone" cx="50" cy="50" r="12" fill="url(#spkGrad)"/>
       </svg>
     </div>
   </div>
@@ -329,7 +343,6 @@
   let audioCtx, analyser, source;
   let isAudioSetup = false;
 
-  // Render Lyrics
   function renderLyrics() {
     lyricsContainer.innerHTML = '';
     lyricsData.forEach((item, index) => {
@@ -344,13 +357,12 @@
     });
   }
 
-  // Setup Real Audio Spectrum Analyzer
   function initAudioAnalyzer() {
     if (isAudioSetup) return;
     try {
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       analyser = audioCtx.createAnalyser();
-      analyser.fftSize = 64;
+      analyser.fftSize = 128; // Increased resolution for sharp sub-bass detection
       source = audioCtx.createMediaElementSource(audio);
       source.connect(analyser);
       analyser.connect(audioCtx.destination);
@@ -360,33 +372,46 @@
     }
   }
 
-  // Real-time Audio Frequency Visualizer Loop
+  // Real-Time NCS Style Bass Shake & Visualizer
   function updateVisualizers() {
     if (!audio.paused && analyser) {
       const dataArray = new Uint8Array(analyser.frequencyBinCount);
       analyser.getByteFrequencyData(dataArray);
 
-      // 1. Calculate Bass for Speaker Pump (Bins 0 to 3)
-      let bassSum = dataArray[0] + dataArray[1] + dataArray[2] + dataArray[3];
-      let bassAvg = bassSum / 4;
-      let speakerScale = 1 + (bassAvg / 255) * 0.32; // Scale based on actual bass hits
+      // 1. Isolate Deep Sub-Bass (Bins 0 to 2 for Kick Drums/Bamm sounds)
+      let bassVal = (dataArray[0] + dataArray[1] + dataArray[2]) / 3;
       
+      // Calculate expansion scale up to 1.55x size on heavy hits
+      let scale = 1 + Math.pow(bassVal / 255, 2) * 0.55;
+
       speakers.forEach(spk => {
-        spk.style.transform = `scale(${speakerScale})`;
+        spk.style.setProperty('--spk-scale', scale);
+        spk.style.transform = `scale(${scale})`;
+
+        // Trigger violent vibration effect when bass exceeds heavy threshold
+        if (bassVal > 180) {
+          spk.classList.add('vibrate');
+          spk.style.filter = `drop-shadow(0 0 16px rgba(255, 0, 92, 0.95))`;
+        } else {
+          spk.classList.remove('vibrate');
+          spk.style.filter = `drop-shadow(0 0 8px rgba(255, 0, 92, 0.5))`;
+        }
       });
 
-      // 2. Map Vocal/Music Frequencies to Beat Line Bars
-      const barIndices = [2, 5, 8, 12, 16]; // Frequency bins spanning bass to treble
+      // 2. Animated Lyrics Beat Bar Line (Vocal & Mid-Frequency Sync)
+      const barIndices = [1, 4, 8, 14, 22];
       bars.forEach((bar, index) => {
         let freqValue = dataArray[barIndices[index]] || 0;
-        let barHeight = Math.max(3, (freqValue / 255) * 18);
+        let barHeight = Math.max(3, (freqValue / 255) * 20);
         bar.style.height = `${barHeight}px`;
       });
 
       requestAnimationFrame(updateVisualizers);
     } else {
-      // Reset animations on pause
-      speakers.forEach(spk => spk.style.transform = 'scale(1)');
+      speakers.forEach(spk => {
+        spk.style.transform = 'scale(1)';
+        spk.classList.remove('vibrate');
+      });
       bars.forEach(bar => bar.style.height = '3px');
     }
   }
