@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Isa Lang - ArthurFelip</title>
+  <title>Isa Lang - Arthur Felip</title>
   <style>
     * {
       box-sizing: border-box;
@@ -31,38 +31,107 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
       text-align: center;
       border: 2px solid transparent;
-‎      background-image: 
-‎      linear-gradient(#1e1e1e, #1e1e1e), 
-‎      linear-gradient(135deg, #00d2ff, #ff005c, #ff7700, #00d2ff);
-‎      background-origin: border-box;
-‎      background-clip: padding-box, border-box;
-‎      background-size: 100% 100%, 300% 300%;
-      ‎animation: lightning-glow 3s linear infinite;
-      
+      background-image: 
+        linear-gradient(#232529, #232529), 
+        linear-gradient(135deg, #00d2ff, #ff005c, #ff7700, #00d2ff);
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+      background-size: 100% 100%, 300% 300%;
+      animation: lightning-glow 3s linear infinite;
+      box-sizing: border-box;
+      overflow: hidden;
+      position: relative;
     }
-      ‎@keyframes lightning-glow {
-   ‎   0% {
-‎      background-position: 0% 0%, 0% 50%;
-‎      box-shadow: 
-‎      0 0 10px #00d2ff,
-‎      0 0 25px rgba(255, 0, 92, 0.6),
-‎      0 0 40px rgba(255, 119, 0, 0.4);
-‎  }
+
+    @keyframes lightning-glow {
+      0% {
+        background-position: 0% 0%, 0% 50%;
+        box-shadow: 
+          0 0 10px #00d2ff,
+          0 0 25px rgba(255, 0, 92, 0.6),
+          0 0 40px rgba(255, 119, 0, 0.4);
+      }
       50% {
-‎      background-position: 0% 0%, 100% 50%;
-‎      box-shadow: 
-‎      0 0 15px #ff005c,
-‎      0 0 30px rgba(255, 119, 0, 0.7),
-‎      0 0 45px rgba(0, 210, 255, 0.5);
-‎  }
+        background-position: 0% 0%, 100% 50%;
+        box-shadow: 
+          0 0 15px #ff005c,
+          0 0 30px rgba(255, 119, 0, 0.7),
+          0 0 45px rgba(0, 210, 255, 0.5);
+      }
       100% {
-‎      background-position: 0% 0%, 0% 50%;
-‎      box-shadow: 
-‎      0 0 10px #00d2ff,
-‎      0 0 25px rgba(255, 0, 92, 0.6),
-‎      0 0 40px rgba(255, 119, 0, 0.4);
-‎  }
-‎}
+        background-position: 0% 0%, 0% 50%;
+        box-shadow: 
+          0 0 10px #00d2ff,
+          0 0 25px rgba(255, 0, 92, 0.6),
+          0 0 40px rgba(255, 119, 0, 0.4);
+      }
+    }
+
+    .header-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 8px;
+      box-sizing: border-box;
+    }
+
+    .title-group {
+      text-align: center;
+      flex: 1;
+    }
+
+    .speaker-icon {
+      width: 26px;
+      height: 26px;
+      color: #ff005c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+    }
+
+    .playing .speaker-icon {
+      animation: bass-pump 0.45s infinite alternate ease-in-out;
+    }
+
+    @keyframes bass-pump {
+      0% { transform: scale(1); color: #ff005c; }
+      100% { transform: scale(1.25); color: #7000ff; }
+    }
+
+    .beat-line {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 4px;
+      height: 14px;
+      margin: 8px 0 12px 0;
+    }
+
+    .beat-line .bar {
+      width: 3px;
+      height: 3px;
+      background: linear-gradient(180deg, #ff005c, #7000ff);
+      border-radius: 2px;
+      transition: height 0.2s ease;
+    }
+
+    .playing .beat-line .bar {
+      animation: beat-bounce 0.5s infinite ease-in-out alternate;
+    }
+
+    .playing .beat-line .bar:nth-child(1) { animation-delay: 0.1s; }
+    .playing .beat-line .bar:nth-child(2) { animation-delay: 0.3s; }
+    .playing .beat-line .bar:nth-child(3) { animation-delay: 0.2s; }
+    .playing .beat-line .bar:nth-child(4) { animation-delay: 0.4s; }
+    .playing .beat-line .bar:nth-child(5) { animation-delay: 0.15s; }
+
+    @keyframes beat-bounce {
+      0% { height: 3px; }
+      100% { height: 14px; }
+    }
+
     .track-title {
       font-size: 1.5rem;
       font-weight: 700;
@@ -88,13 +157,14 @@
     }
 
     .lyrics-container::-webkit-scrollbar-thumb {
-      background: #232529;
+      background: #333;
       border-radius: 4px;
     }
 
     .line {
       font-size: 1.1rem;
-      background: #232529;
+      color: #777;
+      background: transparent;
       padding: 12px 0;
       transition: all 0.3s ease;
       cursor: pointer;
@@ -102,9 +172,10 @@
 
     .line.active {
       background: linear-gradient(135deg, #FF004D, #6A00FF);
-      font-size: 1.3rem;
+      color: #ffffff;
+      font-size: 1.2rem;
       font-weight: bold;
-      border-radius: 15px;
+      border-radius: 12px;
     }
 
     .controls {
@@ -116,7 +187,7 @@
 
     .play-btn {
       background: linear-gradient(135deg, #FF004D, #6A00FF);
-      color: #000;
+      color: #ffffff;
       border: none;
       border-radius: 50px;
       padding: 14px 36px;
@@ -127,7 +198,6 @@
     }
 
     .play-btn:hover {
-      background: linear-gradient(135deg, #FF004D, #6A00FF);
       transform: scale(1.04);
     }
 
@@ -137,14 +207,13 @@
       align-items: center;
       gap: 10px;
       font-size: 0.85rem;
-      background: #232529;
-      border-radius: 25px;
+      color: #a7a7a7;
     }
 
     .progress-bar {
       flex: 1;
       height: 6px;
-      background: linear-gradient(120deg, #C700FF, #0047FF);;
+      background: #333;
       border-radius: 3px;
       appearance: none;
       outline: none;
@@ -156,92 +225,14 @@
       width: 12px;
       height: 12px;
       border-radius: 50%;
-      background: linear-gradient(90deg, #FF0000, #0000FF);
+      background: #ff005c;
       cursor: pointer;
     }
-  /* Card Container Bounds */
-.player-card {
-  box-sizing: border-box;
-  overflow: hidden; /* Prevents speakers/beat animation from going outside */
-  position: relative;
-}
-
-/* Speaker & Title Row Alignment */
-.header-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 0 8px;
-  box-sizing: border-box;
-}
-
-.title-group {
-  text-align: center;
-  flex: 1;
-}
-
-/* Speaker Icons */
-.speaker-icon {
-  width: 26px;
-  height: 26px;
-  color: #ff005c;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s ease;
-}
-
-/* Bass Pulse Animation on Speakers when Playing */
-.playing .speaker-icon {
-  animation: bass-pump 0.45s infinite alternate ease-in-out;
-}
-
-@keyframes bass-pump {
-  0% { transform: scale(1); color: #ff005c; }
-  100% { transform: scale(1.25); color: #7000ff; }
-}
-
-/* Tiny Lyrics Beat Line Visualizer */
-.beat-line {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 4px;
-  height: 14px;
-  margin: 8px 0 12px 0;
-}
-
-.beat-line .bar {
-  width: 3px;
-  height: 3px;
-  background: linear-gradient(180deg, #ff005c, #7000ff);
-  border-radius: 2px;
-  transition: height 0.2s ease;
-}
-
-/* Audio Beat Bounce Animation when Playing */
-.playing .beat-line .bar {
-  animation: beat-bounce 0.5s infinite ease-in-out alternate;
-}
-
-.playing .beat-line .bar:nth-child(1) { animation-delay: 0.1s; }
-.playing .beat-line .bar:nth-child(2) { animation-delay: 0.3s; }
-.playing .beat-line .bar:nth-child(3) { animation-delay: 0.2s; }
-.playing .beat-line .bar:nth-child(4) { animation-delay: 0.4s; }
-.playing .beat-line .bar:nth-child(5) { animation-delay: 0.15s; }
-
-@keyframes beat-bounce {
-  0% { height: 3px; }
-  100% { height: 14px; }
-}
-
   </style>
 </head>
 <body>
 
- <div class="player-card" id="playerCard">
-  <!-- Header with Speaker Icons on Left & Right -->
+<div class="player-card" id="playerCard">
   <div class="header-container">
     <div class="speaker-icon">
       <svg viewBox="0 0 24 24" fill="currentColor">
@@ -263,7 +254,6 @@
     </div>
   </div>
 
-  <!-- Tiny Lyrics Beat Visualizer Line -->
   <div class="beat-line">
     <span class="bar"></span>
     <span class="bar"></span>
@@ -272,10 +262,8 @@
     <span class="bar"></span>
   </div>
 
-  <!-- Synced Lyrics Window -->
   <div class="lyrics-container" id="lyricsContainer"></div>
 
-  <!-- Controls -->
   <div class="controls">
     <div class="progress-container">
       <span id="currentTime">0:00</span>
@@ -286,173 +274,148 @@
     <button class="play-btn" id="playBtn">Play</button>
   </div>
 
-  <!-- Audio Element -->
   <audio id="audio" src="Arthur-Felip isa lang.mp3"></audio>
 </div>
 
-  
-  <script>
-    // 1. Synced lyrics data array (Timestamp in seconds + text)
-    const lyricsData = [
-          { time: 24.07, text: "Pag-usapan muna natin ang iyong gabi" },
-  { time: 29.44, text: "Ikaw ang pahinga ko, mahal" },
-  { time: 36.41, text: "Lumiliwanag aking ngiti kapag kausap na" },
-  { time: 42.80, text: "Kita pasensya lang kung" },
-  { time: 46.01, text: "Babalik pa rin sa atin" },
-  { time: 48.96, text: "Kahit 'di mo 'ko hanapin" },
-  { time: 51.49, text: "Magpapaalipin lang sa'yo" },
-  { time: 54.43, text: "Pinapawi mo ang uhaw ng aking puso" },
-  { time: 58.46, text: "Oh, sabik sa lalim ng pagtingin mo para sa'kin" },
-  { time: 63.39, text: "'Pag napansin mo na ako" },
-  { time: 66.38, text: "Papaunawa ko agad sa'yo na" },
-  { time: 69.40, text: "Isa lang, isa lang" },
-  { time: 74.98, text: "Ang hinahanap ko, hanap ko" },
-  { time: 81.12, text: "Ikaw ra man, ikaw ra man" },
-  { time: 86.98, text: "Kung papalarin na, mapapasakin ba?" },
-  { time: 93.31, text: "Kung saan-saan man magtungo 'di alam kung ba't sa puso" },
-  { time: 99.10, text: "Pangalan mo lang ang tanging laman" },
-  { time: 105.04, text: "Hindi alam kung ba't mas sinusunod mo pa ang iyong mga tala" },
-  { time: 112.71, text: "At 'di ang nararamdaman sa akin ngunit" },
-  { time: 117.42, text: "Babalik pa rin sa atin" },
-  { time: 120.39, text: "Kahit 'di mo 'ko hanapin" },
-  { time: 122.91, text: "Magpapaalipin lang sa'yo" },
-  { time: 125.90, text: "Pinapawi mo ang uhaw ng aking puso" },
-  { time: 129.86, text: "Oh, sabik sa lalim ng pagtingin mo para sa'kin" },
-  { time: 135.12, text: "'Pag napansin mo na ako" },
-  { time: 137.48, text: "Ipapaunawa ko agad sa'yo na" },
-  { time: 140.81, text: "Isa lang, isa lang" },
-  { time: 146.43, text: "Ang hinahanap ko, hanap ko" },
-  { time: 152.44, text: "Ikaw ra man, ikaw ra man" },
-  { time: 158.23, text: "Kung papalarin na, mapapasakin ba?" },
-  { time: 199.70, text: "Kung mang-aakit, akit ka na naman" },
-  { time: 205.71, text: "Pwede bang sa akin, akin lang?" },
-  { time: 211.09, text: "Kung mang-aakit, akit ka na naman" },
-  { time: 217.60, text: "Pwede bang sa akin, akin lang?" },
-  { time: 223.48, text: "Kung mang-aakit, akit ka na naman" },
-  { time: 229.57, text: "Pwede bang sa akin, akin lang?" },
-  { time: 235.98, text: "Isa lang, isa lang" },
-  { time: 241.66, text: "Ang hinahanap ko, hanap ko" },
-  { time: 247.64, text: "Ikaw ra man, ikaw ra man" },
-  { time: 253.56, text: "Kung papalarin na, mapapasakin ba?" }
-      
-      
-      // You can add the remaining timestamps and lyric lines here
-    ];
+<script>
+  const lyricsData = [
+    { time: 24.07, text: "Pag-usapan muna natin ang iyong gabi" },
+    { time: 29.44, text: "Ikaw ang pahinga ko, mahal" },
+    { time: 36.41, text: "Lumiliwanag aking ngiti kapag kausap na" },
+    { time: 42.80, text: "Kita pasensya lang kung" },
+    { time: 46.01, text: "Babalik pa rin sa atin" },
+    { time: 48.96, text: "Kahit 'di mo 'ko hanapin" },
+    { time: 51.49, text: "Magpapaalipin lang sa'yo" },
+    { time: 54.43, text: "Pinapawi mo ang uhaw ng aking puso" },
+    { time: 58.46, text: "Oh, sabik sa lalim ng pagtingin mo para sa'kin" },
+    { time: 63.39, text: "'Pag napansin mo na ako" },
+    { time: 66.38, text: "Papaunawa ko agad sa'yo na" },
+    { time: 69.40, text: "Isa lang, isa lang" },
+    { time: 74.98, text: "Ang hinahanap ko, hanap ko" },
+    { time: 81.12, text: "Ikaw ra man, ikaw ra man" },
+    { time: 86.98, text: "Kung papalarin na, mapapasakin ba?" },
+    { time: 93.31, text: "Kung saan-saan man magtungo 'di alam kung ba't sa puso" },
+    { time: 99.10, text: "Pangalan mo lang ang tanging laman" },
+    { time: 105.04, text: "Hindi alam kung ba't mas sinusunod mo pa ang iyong mga tala" },
+    { time: 112.71, text: "At 'di ang nararamdaman sa akin ngunit" },
+    { time: 117.42, text: "Babalik pa rin sa atin" },
+    { time: 120.39, text: "Kahit 'di mo 'ko hanapin" },
+    { time: 122.91, text: "Magpapaalipin lang sa'yo" },
+    { time: 125.90, text: "Pinapawi mo ang uhaw ng aking puso" },
+    { time: 129.86, text: "Oh, sabik sa lalim ng pagtingin mo para sa'kin" },
+    { time: 135.12, text: "'Pag napansin mo na ako" },
+    { time: 137.48, text: "Ipapaunawa ko agad sa'yo na" },
+    { time: 140.81, text: "Isa lang, isa lang" },
+    { time: 146.43, text: "Ang hinahanap ko, hanap ko" },
+    { time: 152.44, text: "Ikaw ra man, ikaw ra man" },
+    { time: 158.23, text: "Kung papalarin na, mapapasakin ba?" },
+    { time: 199.70, text: "Kung mang-aakit, akit ka na naman" },
+    { time: 205.71, text: "Pwede bang sa akin, akin lang?" },
+    { time: 211.09, text: "Kung mang-aakit, akit ka na naman" },
+    { time: 217.60, text: "Pwede bang sa akin, akin lang?" },
+    { time: 223.48, text: "Kung mang-aakit, akit ka na naman" },
+    { time: 229.57, text: "Pwede bang sa akin, akin lang?" },
+    { time: 235.98, text: "Isa lang, isa lang" },
+    { time: 241.66, text: "Ang hinahanap ko, hanap ko" },
+    { time: 247.64, text: "Ikaw ra man, ikaw ra man" },
+    { time: 253.56, text: "Kung papalarin na, mapapasakin ba?" }
+  ];
 
-    const audio = document.getElementById('audio');
-    const playBtn = document.getElementById('playBtn');
-    const lyricsContainer = document.getElementById('lyricsContainer');
-    const progressBar = document.getElementById('progressBar');
-    const currentTimeEl = document.getElementById('currentTime');
-    const durationEl = document.getElementById('duration');
-
-    let currentActiveIndex = -1;
-
-    // Render lyrics inside container
-    function renderLyrics() {
-      lyricsContainer.innerHTML = '';
-      lyricsData.forEach((item, index) => {
-        const p = document.createElement('p');
-        p.className = 'line';
-        p.id = `line-${index}`;
-        p.innerText = item.text;
-        p.addEventListener('click', () => {
-          audio.currentTime = item.time;
-        });
-        lyricsContainer.appendChild(p);
-      });
-    }
-
-    // Toggle Play/Pause
-    playBtn.addEventListener('click', () => {
-      if (audio.paused) {
-        audio.play();
-        playBtn.innerText = 'Pause';
-      } else {
-        audio.pause();
-        playBtn.innerText = 'Play';
-      }
-    });
-
-    // Update synced lyrics and progress bar as music plays
-    audio.addEventListener('timeupdate', () => {
-      const current = audio.currentTime;
-      
-      // Update progress bar
-      if (audio.duration) {
-        progressBar.value = (current / audio.duration) * 100;
-        currentTimeEl.innerText = formatTime(current);
-      }
-
-      // Sync active lyric line
-      let activeIndex = -1;
-      for (let i = 0; i < lyricsData.length; i++) {
-        if (current >= lyricsData[i].time) {
-          activeIndex = i;
-        } else {
-          break;
-        }
-      }
-
-      if (activeIndex !== currentActiveIndex) {
-        if (currentActiveIndex !== -1) {
-          const prevEl = document.getElementById(`line-${currentActiveIndex}`);
-          if (prevEl) prevEl.classList.remove('active');
-        }
-
-        if (activeIndex !== -1) {
-          const activeEl = document.getElementById(`line-${activeIndex}`);
-          if (activeEl) {
-            activeEl.classList.add('active');
-            activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-        }
-        currentActiveIndex = activeIndex;
-      }
-    });
-
-    // Audio metadata loaded
-    audio.addEventListener('loadedmetadata', () => {
-      durationEl.innerText = formatTime(audio.duration);
-    });
-
-    // Seek via progress bar
-    progressBar.addEventListener('input', () => {
-      if (audio.duration) {
-        audio.currentTime = (progressBar.value / 100) * audio.duration;
-      }
-    });
-
-    // Helper: Format seconds to MM:SS
-    function formatTime(seconds) {
-      const mins = Math.floor(seconds / 60);
-      const secs = Math.floor(seconds % 60);
-      return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-    }
+  const audio = document.getElementById('audio');
+  const playBtn = document.getElementById('playBtn');
+  const lyricsContainer = document.getElementById('lyricsContainer');
+  const progressBar = document.getElementById('progressBar');
+  const currentTimeEl = document.getElementById('currentTime');
+  const durationEl = document.getElementById('duration');
   const playerCard = document.getElementById('playerCard');
 
-// Update your Play button event listener to toggle animations
-playBtn.addEventListener('click', () => {
-  if (audio.paused) {
-    audio.play();
-    playBtn.innerText = 'Pause';
-    playerCard.classList.add('playing'); // Starts speakers & beat animation
-  } else {
-    audio.pause();
-    playBtn.innerText = 'Play';
-    playerCard.classList.remove('playing'); // Stops animation
+  let currentActiveIndex = -1;
+
+  function renderLyrics() {
+    lyricsContainer.innerHTML = '';
+    lyricsData.forEach((item, index) => {
+      const p = document.createElement('p');
+      p.className = 'line';
+      p.id = `line-${index}`;
+      p.innerText = item.text;
+      p.addEventListener('click', () => {
+        audio.currentTime = item.time;
+      });
+      lyricsContainer.appendChild(p);
+    });
   }
-});
 
-// Automatically stop animation when song finishes
-audio.addEventListener('ended', () => {
-  playBtn.innerText = 'Play';
-  playerCard.classList.remove('playing');
-});
+  playBtn.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play().then(() => {
+        playBtn.innerText = 'Pause';
+        playerCard.classList.add('playing');
+      }).catch(err => {
+        console.log("Playback blocked or file error:", err);
+      });
+    } else {
+      audio.pause();
+      playBtn.innerText = 'Play';
+      playerCard.classList.remove('playing');
+    }
+  });
 
+  audio.addEventListener('timeupdate', () => {
+    const current = audio.currentTime;
+    
+    if (audio.duration) {
+      progressBar.value = (current / audio.duration) * 100;
+      currentTimeEl.innerText = formatTime(current);
+    }
 
-    // Initialize
-    renderLyrics();
-  </script>
+    let activeIndex = -1;
+    for (let i = 0; i < lyricsData.length; i++) {
+      if (current >= lyricsData[i].time) {
+        activeIndex = i;
+      } else {
+        break;
+      }
+    }
+
+    if (activeIndex !== currentActiveIndex) {
+      if (currentActiveIndex !== -1) {
+        const prevEl = document.getElementById(`line-${currentActiveIndex}`);
+        if (prevEl) prevEl.classList.remove('active');
+      }
+
+      if (activeIndex !== -1) {
+        const activeEl = document.getElementById(`line-${activeIndex}`);
+        if (activeEl) {
+          activeEl.classList.add('active');
+          activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+      currentActiveIndex = activeIndex;
+    }
+  });
+
+  audio.addEventListener('loadedmetadata', () => {
+    durationEl.innerText = formatTime(audio.duration);
+  });
+
+  audio.addEventListener('ended', () => {
+    playBtn.innerText = 'Play';
+    playerCard.classList.remove('playing');
+  });
+
+  progressBar.addEventListener('input', () => {
+    if (audio.duration) {
+      audio.currentTime = (progressBar.value / 100) * audio.duration;
+    }
+  });
+
+  function formatTime(seconds) {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+  }
+
+  renderLyrics();
+</script>
 </body>
 </html>
